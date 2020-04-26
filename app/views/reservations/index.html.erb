@@ -1,0 +1,7 @@
+<h1>予約状況カレンダー</h1>
+
+<ul>
+  <% @reservations.each do |reservation| %>
+    <li><%= link_to reservation.id, edit_reservation_path(reservation)  %> : <li><%= reservation.date.to_s.to_date.strftime("%Y年%m月%d日") %></li>
+  <% end %>
+</ul>
