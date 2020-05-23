@@ -10,7 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_26_014130) do
+ActiveRecord::Schema.define(version: 2020_05_10_075520) do
+
+  create_table "calendars", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "date"
+    t.string "place"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "courses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "members", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.integer "leader"
+    t.bigint "reservation_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["reservation_id"], name: "index_members_on_reservation_id"
+  end
 
   create_table "reservations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "date"
@@ -18,8 +40,11 @@ ActiveRecord::Schema.define(version: 2020_04_26_014130) do
     t.string "course"
     t.string "remarks"
     t.bigint "user_id"
+    t.bigint "calendar_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["calendar_id"], name: "index_reservations_on_calendar_id"
+    t.index ["user_id", "calendar_id"], name: "index_reservations_on_user_id_and_calendar_id", unique: true
     t.index ["user_id"], name: "index_reservations_on_user_id"
   end
 
@@ -31,5 +56,7 @@ ActiveRecord::Schema.define(version: 2020_04_26_014130) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "members", "reservations"
+  add_foreign_key "reservations", "calendars"
   add_foreign_key "reservations", "users"
 end

@@ -1,0 +1,23 @@
+<div class="text-center">
+  <h1>参加者の変更</h1>
+</div>
+
+<div class="row">
+  <aside class="col-lg-2">
+  </aside>
+  
+  <div class="col-lg-8">
+  <%= form_with(model: @member, local: true) do |f|  %>
+  
+    <div class="form-group">
+      <%= f.label :name, '参加者氏名' %>
+      <%= f.text_field :name, value: @member.name, class: 'form-control' %>
+    </div>
+    
+    <div class = "text-center" >
+      <%= f.submit '変更する', class: 'btn btn-primary btn-sm' %>
+      <%= link_to "この参加者をキャンセルする", @member, method: :delete, data: { confirm: "この参加者をキャンセルしますか?" },class: 'btn btn-danger btn-sm'%>
+      <p><a> <%= link_to '参加者一覧に戻る',members_path(@reservation) %> </a></p>
+    </div>
+  </div>  
+  <% end %>

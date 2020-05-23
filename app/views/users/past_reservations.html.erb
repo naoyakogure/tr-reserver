@@ -8,13 +8,13 @@
         <img class="rounded img-fluid" src="<%= gravatar_url(@user, { size: 500 }) %>" alt="">
       </div>
     </div>
-    <%= link_to '予約する', calendars_path, class: "btn btn-primary btn-block" %>
+    <%= link_to '予約する', reservations_path, class: "btn btn-primary btn-block" %>
   </aside>
   <div class="col-sm-8">
     <ul class="nav nav-tabs nav-justified mb-3">
       <li class="nav-item"><a href="<%= user_path(@user) %>"  class="nav-link">予約研修一覧</a></li>
       <li class="nav-item"><a href="<%= past_reservations_user_path(@user) %>" class="nav-link">過去研修一覧</a></li>
     </ul>
-    <%= render 'reservations/reservations', reservations: @reservations %>
+    <%= render 'reservations/past_reservations', reservations: @reservations %>
   </div>
 </div>

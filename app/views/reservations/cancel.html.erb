@@ -1,5 +1,5 @@
 <div class="text-center">
-  <h1>予約詳細</h1>
+  <h1>予約のキャンセル</h1>
 </div>
 
 <div class="row">
@@ -9,6 +9,7 @@
       <div class="form-group">
         <%= f.label :course, 'コース   　　　 ' %>
         <%= @reservation.course %>
+        <%= f.hidden_field :course, :value =>'' %>
       </div>
       
       <div class="form-group">
@@ -22,14 +23,19 @@
       </div>
       
     　<div class="form-group">
-        <%= f.label :remarks, '備考(２５０文字）' %>
-        <%= f.text_area :remarks, class: 'form-control' ,rows: 5  %>
+        <%= f.label :remarks, '備考    　　　　' %>
+        <%= @reservation.remarks %>
+        <%= f.hidden_field :remarks, :value =>'' %>
       </div>
+      
+      <%= f.hidden_field :user, :value =>'' %>
+      <p>以上の内容をキャンセルしますか？</p>
+      <%= f.submit 'キャンセルする', class: 'btn btn-primary btn-block' %>
       
     <% end %>
   </div>
 </div>
 
 <div class="text-center">
-<%= link_to 'ユーザページに戻る', user_path(current_user) %>
+<%= link_to 'カレンダーに戻る', reservations_path %>
 </div>

@@ -6,9 +6,13 @@ Rails.application.routes.draw do
   delete 'logout', to: 'sessions#destroy'
   
   get 'signup', to: 'users#new'
-  resources :users, only: [:index, :show, :new, :create]
+  resources :users, only: [:show, :new, :create] do
+    member do
+      get :past_reservations
+    end
+  end
   
-  #get 'reserve' , to: 'reservations/new'
-  
-  resources :reservations
+  resources :reservations,  except: [:new]
+  resources :calendars,  only: [:index, :show]
+  resources :members, except: [:show]
 end

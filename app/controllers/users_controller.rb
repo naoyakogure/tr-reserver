@@ -1,12 +1,24 @@
 class UsersController < ApplicationController
-  before_action :require_user_logged_in, only: [:index, :show]
+  before_action :require_user_logged_in, only: [:show, :past_reservations]
 
-  def index
-    @users = User.order(id: :desc).page(params[:page]).per(25)
-  end
+  #def index
+    #@users = User.order(id: :desc).page(params[:page]).per(25)
+  #end
 
   def show
     @user = User.find(params[:id])
+    if current_user.id == @user.id
+    #@user = current_user
+    #@user = User.find(params[:id])
+      @reservations = Reservation.where(user: current_user.id).order("date ASC").page(params[:page])
+    else
+      redirect_to current_user
+    end
+  end
+  
+  def past_reservations
+    @user = current_user
+    @reservations = Reservation.where(user: current_user.id).order("date ASC").page(params[:page])
   end
 
   def new

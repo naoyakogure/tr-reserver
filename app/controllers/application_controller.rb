@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
 
   include SessionsHelper
+  include CalendarsHelper
+  include ReservationsHelper
 
   private
 

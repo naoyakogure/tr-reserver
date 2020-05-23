@@ -1,0 +1,30 @@
+<% if session[:double_booking] != '1' %>
+  <%#= session[:double_booking] = nil %>
+  <%= flash[:danger] = 'すでに参加者は予約されています'%>
+  <td><%= link_to 'ユーザページに戻る', user_path(@user) %></td>
+<% else %>
+  <h1>参加者</h1>
+  
+  <div class="col-sm-6 offset-sm-3">
+    <%= form_for(@form, url: members_path, method: :post) do |fb| %>
+      <% num = 0 %>
+      <%= fb.fields_for :members do |f| %>
+        
+        <div class="field">
+          <%= f.label :name, '氏名' %>
+          <%= f.text_field :name, class: 'form-control'%>
+          <%= f.hidden_field :reservation_id, :value =>target_reservation.id %>
+        </div>
+          <% if num == 0 %>
+            <%= f.hidden_field :leader, :value =>1 %>
+            <% num =  1 %>
+          <% else%>
+            <%= f.hidden_field :leader, :value =>0 %>
+          <% end %>
+        <%= hidden_field_tag :test, value: "test_value" %>
+      
+      <% end %>
+      <%= fb.submit '登録', class: 'btn btn-primary btn-block' %>
+    <% end %>
+  </div>
+<% end %>

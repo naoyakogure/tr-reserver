@@ -1,0 +1,41 @@
+<div class="text-center">
+  <h1>参加者</h1>
+</div>
+
+<div class="row">
+  <aside class="col-lg-2">
+  </aside>
+
+  <div class="col-lg-8">
+    <% if @members.any? %>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>変更・追加・キャンセル</th>
+            <th>氏名</th>
+            <th>代表者</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @members.each do |member| %>
+            <% if member.leader == 1 %>
+              <tr>
+                <td><%= link_to '変更・追加・キャンセル', edit_member_path(member,@reservation.id) %></td>
+                <td><%= member.name %></td>
+                <td><%= "代表者" %></td>
+            <% else %>
+              <tr>
+                <td><%= link_to '変更・追加・キャンセル', edit_member_path(member,@reservation.id) %></td>
+                <td><%= member.name %></td>
+                <td><%= "" %></td>
+              </tr>
+            <% end %>  
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+    <div class = "text-center" >
+    <p><a> <%= link_to '予約変更ページに戻る',edit_reservation_path(@reservation) %> </a></p>
+    </div>
+  </div> 
+</div> 

@@ -1,14 +1,20 @@
 <div class="text-center">
-  <h1>研修予約</h1>
+  <h1>予約の変更</h1>
 </div>
 
 <div class="row">
-  <div class="col-sm-6 offset-sm-3">
-
+  <aside class="col-sm-2">
+    <%= link_to raw("参加者を<br/>確認・変更する"), members_path(@reservation.id), class: 'btn btn-success btn-block'%>
+    <%# if current_user.id == @reservation.user_id %>
+    <%= link_to "予約のキャンセル", @reservation, method: :delete, data: { confirm: "予約をキャンセルしますか?" }, class: 'btn btn-danger btn-block' %>
+  </aside>
+  
+  <div class="col-sm-10">
     <%= form_with(model: @reservation, local: true) do |f| %>
       <div class="form-group">
-        <%= f.label :course, 'コース' %>
-        <%= f.text_field :course, class: 'form-control' %>
+        <%= f.label :course, 'コース   　　　 ' %>
+        <%#= select_tag :course, options_for_select(['新人研修',' 管理職研修', '現場責任者研修','上級管理職研修'], @reservation.course), include_blank: true %>
+        <%= f.collection_select :course, Course.all, :name, :name, {include_blank: true,selected:@reservation.course} %>
       </div>
       
       <div class="form-group">
@@ -17,22 +23,21 @@
       </div>
 
       <div class="form-group">
-        <%= f.label :place, '研修室   　　　 ' %>
+        <%= f.label :place, '会場    　　　　' %>
         <%= @reservation.place %>
       </div>
       
     　<div class="form-group">
         <%= f.label :remarks, '備考(２５０文字）' %>
-        <%= f.text_area :remarks, class: 'form-control' ,rows: 5  %>
+        <%= f.text_area :remarks, value:@reservation.remarks, class: 'form-control' ,rows: 5  %>
       </div>
+      <%= f.hidden_field :user, :value =>current_user.id %>
       
-
-      <%= f.submit '予約する', class: 'btn btn-primary btn-block' %>
+      <div class = "text-center" >
+        <%= f.submit '変更する', class: 'btn btn-primary btn-sm' %>
+        <p><a> <%= link_to 'ユーザページに戻る',user_path(current_user) %> </a></p>
+      </div>
       
     <% end %>
   </div>
-</div>
-
-<div class="text-center">
-<%= link_to 'カレンダーに戻る', reservations_path %>
 </div>

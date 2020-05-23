@@ -1,0 +1,6 @@
+<% if calendar.reservation %>
+  <td><a href="#" class="btn btn-danger">予約不可</a></td>
+<% else %>
+  <td><%= link_to '予約する', calendar_path(calendar),  class: "btn btn-primary" %></td>
+<% end %>
+
