@@ -3,7 +3,7 @@
 <% today = d.strftime("%Y%m%d").to_i %>
 <%= form_tag calendars_path, method: :get do %>
   <span>年月選択: <%= select_tag 'date', options_for_select({２０２０年４月: 20200401, ２０２０年５月: 20200501, ２０２０年６月: 20200601,２０２０年７月: 20200701}, @date), include_blank: true %></span>
-  <span>会場選択: <%= select_tag 'place', options_for_select(['大研修場',' 中研修場', '小研修場１','小研修場２'], @place), include_blank: true %></span>
+  <span>会場選択: <%= select_tag 'place', options_for_select(['大研修場','中研修場', '小研修場１','小研修場２'], @place), include_blank: true %></span>
   <%= button_to "表示する", {controller: 'calendars', action: 'index'}, {method: :get} %>
 <% end %>
 

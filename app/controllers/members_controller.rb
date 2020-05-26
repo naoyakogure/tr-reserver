@@ -6,6 +6,12 @@ class MembersController < ApplicationController
     @members = target_reservation.members
     unless current_user.id == @reservation.user_id
       redirect_to current_user
+    else
+      d = Date.today
+      today = d.strftime("%Y%m%d").to_i
+      if @reservation.date < today
+        redirect_to current_user
+      end
     end
   end
   
@@ -26,12 +32,18 @@ class MembersController < ApplicationController
       render 'toppages/index'
     else
       @form = Form::MemberCollection.new(member_collection_params)
-      if @form.save
-        flash[:success] = '参加者を確定しました'
-        redirect_to target_reservation
+      @leader = @form.members.find {|m| m[:leader].to_i == 1}
+      if @leader[:name].blank?
+          flash[:danger] = '代表者が空白です。入力してください'
+          render :new
       else
-        flash[:danger] = '登録できません入力を確認してください'
-        render :new
+        if @form.save
+          flash[:success] = '参加者を確定しました'
+          redirect_to target_reservation
+        else
+          flash[:danger] = '登録できません入力を確認してください'
+          render :new
+        end
       end
     end
   end
