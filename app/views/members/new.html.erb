@@ -1,13 +1,14 @@
 <h1>参加者</h1>
 
 <div class="col-sm-6 offset-sm-3">
+  <a>代表者はユーザネームで仮予約してあります。変更する場合は下のフォームから行ってください</a>
   <%= form_for(@form, url: members_path, method: :post) do |fb| %>
     <% num = 0 %>
     <%= fb.fields_for :members do |f| %>
       <% if num == 0 %>
         <div class="field">
           <%= f.label :name, '氏名(代表者）' %>
-          <%= f.text_field :name, class: 'form-control'%>
+          <%= f.text_field :name, value: @dfo_member.name, class: 'form-control'%>
           <%= f.hidden_field :reservation_id, :value =>target_reservation.id %>
         </div>
           <%= f.hidden_field :leader, :value =>1 %>

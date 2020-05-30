@@ -17,6 +17,7 @@ class ReservationsController < ApplicationController
       @reservation = target_calendar.build_reservation(reservation_params)
       
       if @reservation.save
+        @reservation.members.create(name: current_user.name, leader: 1)
         flash[:success] = '予約を確定しました。続いて参加者を登録してください。'
         get_reservation(@reservation)
         session[:double_booking] = '1'

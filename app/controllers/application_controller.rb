@@ -11,4 +11,10 @@ class ApplicationController < ActionController::Base
       redirect_to login_url
     end
   end
+
+  def member_collection_params
+    params
+      .require(:form_member_collection)
+      .permit(members_attributes: Form::Member::REGISTRABLE_ATTRIBUTES)
+  end
 end
